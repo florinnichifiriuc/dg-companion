@@ -59,10 +59,15 @@ class ScanProcessor {
         this.turn = turn;
     }
 
-    parse(scanResult) {
-        console.log('scanResult', scanResult);
-        this.planet = new dgPlanet(scanResult.coordinates.join('.') + ' ' + scanResult.name);
-        mergeData(this.playerInfo, scanResult.playerInfo, true);
+    parse(scanResult, verbose = true) {
+        if (verbose)
+        {
+            console.log('scanResult', scanResult);
+        }
+        if(scanResult) {
+            this.planet = new dgPlanet(scanResult.coordinates.join('.') + ' ' + scanResult.name);
+            mergeData(this.playerInfo, scanResult.playerInfo, true);
+        }
     }
 
     exportXls() {
@@ -90,8 +95,8 @@ class ResourceScanProcessor extends ScanProcessor {
         this.type = ScanProcessor.TYPE_RESOURCE_SCAN;
     }
 
-    parse(scanResult) {
-        super.parse(scanResult);
+    parse(scanResult, verbose = true) {
+        super.parse(scanResult, verbose);
         Array.from(scanResult.locationUnitCount.unitList).forEach((item) => {
             const name = this.lookup[item.id] || lcfirst(item.name);
             this.stats[name] = item.amount;
@@ -164,8 +169,8 @@ class SurfaceScanProcessor extends ResourceScanProcessor {
         this.type = ScanProcessor.TYPE_SURFACE_SCAN;
     }
 
-    parse(scanResult) {
-        super.parse(scanResult);
+    parse(scanResult, verbose=true) {
+        super.parse(scanResult, verbose);
         Array.from(scanResult.mobileUnitCount.unitList).forEach((item) => {
             if (item.groupId === ScanProcessor.STRUCTURES_GROUP) {
                 this.structures.push(`${item.amount}x ${item.name}`);
@@ -208,6 +213,7 @@ class SurfaceScanProcessor extends ResourceScanProcessor {
             this.requiredSoldiersMax,
             this.turn,
             '(' + this.totals.occupiedWorker + ' occupied workers) ' + this.summary.join(', '),
+            this.houseingCapacity
         ];
         return data.join("\t"); // tabs will go to next cell
     }
@@ -232,6 +238,7 @@ class SurfaceScanProcessor extends ResourceScanProcessor {
             pe('Soldiers:', 14) + ps(formatNumberInt(this.totals.soldier), 9),
             pe('Required:', 14) + ps(formatNumberInt(this.requiredSoldiers), 9),
             pe('Required max:', 14) + ps(formatNumberInt(this.requiredSoldiersMax), 9),
+            pe('Houseing Capacity:', 14) + ps(formatNumberInt(this.houseingCapacity), 9),
             ps('', 23, '-'),
             `Summary: ${this.summary.join(', ')}`,
             ps('', 23, '='),
@@ -256,8 +263,8 @@ class FleetScanProcessor extends ScanProcessor {
         this.type = ScanProcessor.TYPE_FLEET_SCAN;
     }
 
-    parse(scanResult) {
-        super.parse(scanResult);
+    parse(scanResult, verbose = true) {
+        super.parse(scanResult, verbose);
         Array.from(scanResult.mobileList).forEach((item) => {
             // console.log('item', item);
             const alliance = item.player.alliance ? [

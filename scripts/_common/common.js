@@ -44,10 +44,11 @@ const resetFilters = (filters, exclude) => {
     });
 };
 
-const getJsonPageData = () => {
+const getJsonPageData = (source) => {
     let jsonPageData = {};
     const jsPattern = /jsonPageData[\s]?=[\s]?(\{.*\});$/;
-    Array.from(document.querySelectorAll('script')).every((script) => {
+    const fromSource = source || document;
+    Array.from(fromSource.querySelectorAll('script')).every((script) => {
         if (jsPattern.test(script.innerHTML)) {
             const [, jsonStr] = script.innerHTML.match(jsPattern);
             jsonPageData = JSON.parse(jsonStr);
@@ -55,7 +56,9 @@ const getJsonPageData = () => {
         }
         return true;
     });
-    console.log('jsonPageData', jsonPageData);
+    if (!source){
+        console.log('jsonPageData', jsonPageData);
+    }
     return jsonPageData;
 }
 

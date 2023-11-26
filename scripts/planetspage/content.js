@@ -72,45 +72,45 @@
             totalStats.planetsCount++; // each time we encounter a metal value we also increment the planets count
 
             let values = contentTxt.match(resPattern);
-            addPlanetStored(totalStats.planetsCount - 1, 'metal', parseValue(values[1]));
-            addPlanetProduction(totalStats.planetsCount - 1, 'metal', parseValue(values[2]));
-            totalStats.metal += parseValue(values[1]);
-            totalStats.metalProd += parseValue(values[2]);
-            totalStats.metalAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
+            addPlanetStored(totalStats.planetsCount - 1, 'metal', (values && values[1] && parseValue(values[1])) || 0);
+            addPlanetProduction(totalStats.planetsCount - 1, 'metal', (values && values[2] && parseValue(values[2])) || 0);
+            totalStats.metal +=(values && values[1] && parseValue(values[1])) || 0;
+            totalStats.metalProd += (values && values[2] && parseValue(values[2])) || 0;
+            totalStats.metalAvgRate += (values && values[3] && parseValue(values[3])) || 0; // we'll divide by planets count at the end
         } else if (type == 'mineral') {
             let values = contentTxt.match(resPattern);
-            addPlanetStored(totalStats.planetsCount - 1, 'mineral', parseValue(values[1]));
-            addPlanetProduction(totalStats.planetsCount - 1, 'mineral', parseValue(values[2]));
-            totalStats.mineral += parseValue(values[1]);
-            totalStats.mineralProd += parseValue(values[2]);
-            totalStats.mineralAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
+            addPlanetStored(totalStats.planetsCount - 1, 'mineral', (values && values[1] && parseValue(values[1])) || 0);
+            addPlanetProduction(totalStats.planetsCount - 1, 'mineral',(values && values[2] && parseValue(values[2])) || 0);
+            totalStats.mineral += (values && values[1] && parseValue(values[1])) || 0;
+            totalStats.mineralProd += (values && values[2] && parseValue(values[2])) || 0;
+            totalStats.mineralAvgRate += (values && values[3] && parseValue(values[3])) || 0; // we'll divide by planets count at the end
         } else if (type == 'food') {
             let values = contentTxt.match(resPattern);
-            addPlanetStored(totalStats.planetsCount - 1, 'food', parseValue(values[1]));
-            addPlanetProduction(totalStats.planetsCount - 1, 'food', parseValue(values[2]));
-            totalStats.food += parseValue(values[1]);
-            totalStats.foodProd += parseValue(values[2]);
-            totalStats.foodAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
+            addPlanetStored(totalStats.planetsCount - 1, 'food', (values && values[1] && parseValue(values[1])) || 0);
+            addPlanetProduction(totalStats.planetsCount - 1, 'food', (values && values[2] && parseValue(values[2])) || 0);
+            totalStats.food +=(values && values[1] && parseValue(values[1])) || 0;
+            totalStats.foodProd += (values && values[2] && parseValue(values[2])) || 0;
+            totalStats.foodAvgRate += (values && values[3] && parseValue(values[3])) || 0; // we'll divide by planets count at the end
         } else if (type == 'energy') {
             let values = contentTxt.match(resPattern);
-            addPlanetStored(totalStats.planetsCount - 1, 'energy', parseValue(values[1]));
-            addPlanetProduction(totalStats.planetsCount - 1, 'energy', parseValue(values[2]));
-            totalStats.energy += parseValue(values[1]);
-            totalStats.energyProd += parseValue(values[2]);
-            totalStats.energyAvgRate += parseValue(values[3]); // we'll divide by planets count at the end
+            addPlanetStored(totalStats.planetsCount - 1, 'energy', (values && values[1] && parseValue(values[1])) || 0);
+            addPlanetProduction(totalStats.planetsCount - 1, 'energy', (values && values[2] && parseValue(values[2])) || 0);
+            totalStats.energy += (values && values[1] && parseValue(values[1])) || 0;
+            totalStats.energyProd += (values && values[2] && parseValue(values[2])) || 0;
+            totalStats.energyAvgRate += (values && values[3] && parseValue(values[3])) || 0; // we'll divide by planets count at the end
         } else if (type == 'worker') {
             let values = contentTxt.match(popPattern);
-            totalStats.workers += parseValue(values[1]);
-            totalStats.workersAvailable += parseValue(values[2]);
+            totalStats.workers += (values && values[1] && parseValue(values[1])) || 0;
+            totalStats.workersAvailable += (values && values[2] && parseValue(values[2])) || 0;
         } else if (type == 'soldier') {
             let values = contentTxt.match(othPattern);
-            totalStats.soldiers += parseValue(values[1]);
+            totalStats.soldiers += (values && values[1] && parseValue(values[1])) || 0;
         } else if (type == 'ground') {
             let values = contentTxt.match(othPattern);
-            totalStats.ground += parseValue(values[1]);
+            totalStats.ground += (values && values[1] && parseValue(values[1])) || 0;
         } else if (type == 'orbit') {
             let values = contentTxt.match(othPattern);
-            totalStats.orbit += parseValue(values[1]);
+            totalStats.orbit += (values && values[1] && parseValue(values[1])) || 0;
         }
     });
     totalStats.metalAvgRate = (totalStats.metalAvgRate / totalStats.planetsCount).toFixed(2);
