@@ -245,7 +245,7 @@ function insertTotalFleetPanel(fleetComposition) {
                 </div>
         `;
     }
-    document.querySelector('#current-action').insertAdjacentHTML('afterend', `
+    document.querySelector('#contentBox .right.fleetRight').insertAdjacentHTML('beforeend',  `
             <div class="lightBorder ofHidden opacDarkBackground fleetscanTotals">           
                 <div class="header border">Fleet Total              
                  </div>
